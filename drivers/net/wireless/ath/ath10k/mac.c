@@ -7986,6 +7986,11 @@ static void ath10k_sta_statistics(struct ieee80211_hw *hw,
 	sinfo->rx_duration = arsta->rx_duration;
 	sinfo->filled |= BIT_ULL(NL80211_STA_INFO_RX_DURATION);
 
+	if (arsta->tx_stats && ath10k_debug_is_extd_tx_stats_enabled(ar)) {
+		sinfo->tx_duration = arsta->tx_stats->tx_duration;
+		sinfo->filled |= 1ULL << NL80211_STA_INFO_TX_DURATION;
+	}
+
 	if (!arsta->txrate.legacy && !arsta->txrate.nss)
 		return;
 
